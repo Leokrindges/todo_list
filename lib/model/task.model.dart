@@ -6,4 +6,12 @@ class Task {
 
   Task({required this.title, this.description, this.important = false})
     : completed = false;
+
+  changeStatus(bool status) {
+    completed = status;
+  }
+
+  changeImportance() {
+    important = !important;
+  }
 }

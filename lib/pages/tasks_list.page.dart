@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/model/task.model.dart';
 
-class TasksListPage extends StatelessWidget {
+class TasksListPage extends StatefulWidget {
   TasksListPage({super.key});
+
+  @override
+  State<TasksListPage> createState() => _TasksListPageState();
+}
+
+class _TasksListPageState extends State<TasksListPage> {
   final List<Task> tasks = [
     Task(title: 'Marcar uma reunião', description: 'Com o cliente'),
     Task(
@@ -33,13 +39,22 @@ class TasksListPage extends StatelessWidget {
               child: ListTile(
                 title: Text(task.title),
                 subtitle: Text(task.description ?? ''),
-                leading: Checkbox(value: task.completed, onChanged: (value) {}),
+                leading: Checkbox(
+                  value: task.completed,
+                  onChanged: (value) {
+                    setState(() {
+                      task.changeStatus(value!);
+                    });
+                  },
+                ),
                 trailing: IconButton(
-                  icon: Icon(
-                    task.important ? Icons.star : Icons.star_border,
-                    color: Colors.indigo,
-                  ),
-                  onPressed: () {},
+                  color: Colors.indigo,
+                  icon: Icon(task.important ? Icons.star : Icons.star_border),
+                  onPressed: () {
+                    setState(() {
+                      task.changeImportance();
+                    });
+                  },
                 ),
                 onTap: () {},
                 shape: RoundedRectangleBorder(
