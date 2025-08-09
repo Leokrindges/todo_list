@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/model/task.model.dart';
 
-class AddTast extends StatelessWidget {
-  const AddTast({super.key});
+class AddTask extends StatefulWidget {
+  const AddTask({super.key});
+
+  @override
+  State<AddTask> createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  var isImportant = false;
+  var showDescription = false;
+
+  addTask() {
+    final task = Task(
+      title: titleController.text,
+      description: descriptionController.text.isEmpty
+          ? null
+          : descriptionController.text,
+      important: isImportant,
+    );
+
+    Navigator.of(context).pop(task);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +57,41 @@ class AddTast extends StatelessWidget {
           Divider(thickness: 1, height: 0),
           SizedBox(height: 15),
           TextField(
+            controller: titleController,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'O que você quer fazer hoje?',
             ),
           ),
-          TextField(
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'Adicionar informações.',
+          if (showDescription)
+            TextField(
+              controller: descriptionController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Adicionar informações.',
+              ),
             ),
-          ),
           Row(
             children: [
-              Icon(Icons.sort),
+              GestureDetector(
+                child: Icon(Icons.sort),
+                onTap: () {
+                  setState(() {
+                    showDescription = true;
+                  });
+                },
+              ),
               SizedBox(width: 20),
-              Icon(Icons.star_border),
+              GestureDetector(
+                child: Icon(isImportant ? Icons.star : Icons.star_border),
+                onTap: () {
+                  setState(() {
+                    isImportant = !isImportant;
+                  });
+                },
+              ),
               Spacer(),
-              TextButton(onPressed: () {}, child: Text('Adicionar')),
+              TextButton(onPressed: addTask, child: Text('Adicionar')),
             ],
           ),
         ],
