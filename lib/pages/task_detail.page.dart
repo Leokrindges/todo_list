@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_list/model/task.model.dart';
 
 class TaskDetailPage extends StatefulWidget {
@@ -86,7 +87,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Criada Sex, 24 de mar'),
+                  Text(
+                    'Criada ${DateFormat.MMMEd('pt_BR').format(widget.task.createdAt)}',
+                  ),
                   IconButton(
                     onPressed: () {
                       Navigator.of(context).pop(true);
