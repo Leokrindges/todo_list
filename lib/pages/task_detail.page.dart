@@ -88,7 +88,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 children: [
                   Text('Criada Sex, 24 de mar'),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
                     icon: Icon(Icons.delete_outline),
                     iconSize: 28,
                   ),

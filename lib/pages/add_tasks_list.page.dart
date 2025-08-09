@@ -26,13 +26,16 @@ class _TasksListPageState extends State<TasksListPage> {
   }
 
   void updatedTask(task, int index) async {
-    final taskUpdated = await Navigator.of(
+    final result = await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (context) => TaskDetailPage(task: task)));
 
-    if (taskUpdated != null) {
+    if (result != null) {
       setState(() {
-        tasks[index] = taskUpdated;
+        if (result is Task)
+          tasks[index] = result;
+        else if (result is bool && result)
+          tasks.removeAt(index);
       });
     }
   }
