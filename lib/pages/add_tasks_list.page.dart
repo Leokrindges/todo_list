@@ -25,6 +25,18 @@ class _TasksListPageState extends State<TasksListPage> {
     }
   }
 
+  void updatedTask(task, int index) async {
+    final taskUpdated = await Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => TaskDetailPage(task: task)));
+
+    if (taskUpdated != null) {
+      setState(() {
+        tasks[index] = taskUpdated;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,11 +75,7 @@ class _TasksListPageState extends State<TasksListPage> {
                     });
                   },
                 ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TaskDetailPage()),
-                  );
-                },
+                onTap: () => updatedTask(task, index),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
