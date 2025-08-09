@@ -33,7 +33,12 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+      padding: EdgeInsets.only(
+        top: 10.0,
+        left: 20.0,
+        right: 20.0,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Form(
         key: formKey,
         child: Column(
@@ -56,7 +61,9 @@ class _AddTaskState extends State<AddTask> {
                 IconButton(
                   icon: Icon(Icons.close),
                   color: Colors.black54,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             ),

@@ -3,28 +3,25 @@ import 'package:todo_list/model/task.model.dart';
 import 'package:todo_list/widgets/add_task.widget.dart';
 
 class TasksListPage extends StatefulWidget {
-  TasksListPage({super.key});
+  const TasksListPage({super.key});
 
   @override
   State<TasksListPage> createState() => _TasksListPageState();
 }
 
 class _TasksListPageState extends State<TasksListPage> {
-  final List<Task> tasks = [
-    Task(title: 'Marcar uma reunião', description: 'Com o cliente'),
-    Task(
-      title: 'Comprar pão',
-      description: 'Na padaria perto de casa',
-      important: true,
-    )..completed = true,
-  ];
+  final List<Task> tasks = [];
 
   void addTask() async {
     final newTask = await showModalBottomSheet<Task>(
       context: context,
       builder: (ctx) => const AddTask(),
     );
-    print(newTask?.title);
+    if (newTask != null) {
+      setState(() {
+        tasks.add(newTask);
+      });
+    }
   }
 
   @override
